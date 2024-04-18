@@ -130,40 +130,67 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo List'),
+        title: Text(
+          'To-do List',
+          style: TextStyle(
+            color: Colors.black, // Change text color here
+            fontWeight: FontWeight.bold, // Change font weight here
+            fontSize: 26, // Change font size here
+            // You can add more TextStyle properties as needed
+          ),
+        ),
         centerTitle: true,
+        backgroundColor: Colors.pink[100],
       ),
       body: db.todoList.isEmpty
-          ? Center(child: Text('No todos available'))
-          : ListView.builder(
-        itemCount: db.todoList.length,
-        itemBuilder: (context, index) {
-          final item = db.todoList[index];
-          return ListTile(
-            leading: Checkbox(
-              value: item.isCompleted,
-              onChanged: (bool? value) {
-                setState(() {
-                  isComplete(index);
-                });
-              },
-            ),
-            title: Text(
-              item.title,
-              style: TextStyle(
-                decoration: item.isCompleted
-                    ? TextDecoration.lineThrough
-                    : null,
+          ? Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.network(
+                  'https://static.wixstatic.com/media/c177c1_32f3193b310e4d088accb3367d098727~mv2.gif', width: 200, height: 200),
+              // Customize the size as needed
+              Text('No to-do lists available.',
+                  style: TextStyle(fontSize: 25, color: Colors.black))
+            ],
+          )
+      ) // Image displayed when there is no item in the list
+          : Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: ListView.builder(
+          itemCount: db.todoList.length,
+          itemBuilder: (context, index) {
+            final item = db.todoList[index];
+            return Card(
+              elevation: 3, // Adjust the elevation as needed for your design
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Adjust margin as needed
+              child: ListTile(
+                leading: Checkbox(
+                  value: item.isCompleted,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isComplete(index);
+                    });
+                  },
+                ),
+                title: Text(
+                  item.title,
+                  style: TextStyle(
+                    decoration: item.isCompleted ? TextDecoration.lineThrough : null,
+                  ),
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    deleteList(index);
+                  },
+                ),
               ),
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                deleteList(index);
-              },
-            ),
-          );
-        },
+            );
+
+
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _listDialog,
