@@ -106,27 +106,42 @@ class _TodoListState extends State<TodoList> {
       builder: (BuildContext context) {
         TextEditingController _list = TextEditingController();
         return AlertDialog(
-          title: Text('Add Item'),
+          title: Text('Add Note',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+            ),),
           content: TextField(
             controller: _list,
-            decoration: InputDecoration(hintText: 'Enter a list'),
+            decoration: InputDecoration(hintText: 'Enter Note'),
           ),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.pink[200]!),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
               child: Text('Cancel'),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 if (_list.text.isNotEmpty) {
                   addList(_list.text);
                   Navigator.pop(context);
                 }
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green[400]!),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+
+              ),
               child: Text('Confirm'),
             ),
+
           ],
         );
       },
