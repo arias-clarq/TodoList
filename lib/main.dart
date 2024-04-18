@@ -223,7 +223,7 @@ class _TodoListState extends State<TodoList> {
       floatingActionButton: FloatingActionButton(
         onPressed: _listDialog,
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.pink[100],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
