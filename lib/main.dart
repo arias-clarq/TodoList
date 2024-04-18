@@ -9,10 +9,23 @@ void main() async {
   // Initialize Hive
   await Hive.initFlutter();
   var box = await Hive.openBox('database');
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: TodoList(),
-    theme: ThemeData(scaffoldBackgroundColor: Colors.redAccent),
+    home: Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage("https://img.freepik.com/free-photo/gray-painted-background_53876-94041.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        TodoList(),
+      ],
+    ),
+    theme: ThemeData(scaffoldBackgroundColor: Colors.transparent),
   ));
 }
 
