@@ -148,6 +148,44 @@ class _TodoListState extends State<TodoList> {
     );
   }
 
+  void confirmDialog(int index){
+    showDialog(
+      context: context, 
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: const Text("Delete Task"),
+          content: const Text("Are you sure you want to delete this task?"),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.pink[200],
+              ),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                deleteList(index);
+                Navigator.of(context).pop(true);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[400],
+              ),
+              child: const Text(
+                "Delete",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      });
+  }
+
   @override
   void initState() {
     db.loadList();
@@ -210,7 +248,7 @@ class _TodoListState extends State<TodoList> {
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
-                    deleteList(index);
+                    confirmDialog(index);
                   },
                 ),
               ),
